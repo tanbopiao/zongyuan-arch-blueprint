@@ -1,0 +1,18 @@
+{
+  "status": "OK",
+  "choose": "kilo_free",
+  "tier": "T1",
+  "capability": "text",
+  "smoke_code": "200",
+  "quota_hint": "ok",
+  "why": "OpenRouter white-label free gateway with sufficient anonymous rate limit.",
+  "fallbacks": [
+    "provider_b",
+    "provider_c"
+  ],
+  "local_reachable": true,
+  "local_fused": false,
+  "updated_at": "2026-10-21T00:00:00Z",
+  "source": "api_router.call-check",
+  "route_file_stale_seconds": 600
+}
