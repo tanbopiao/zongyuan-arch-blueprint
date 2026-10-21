@@ -28,7 +28,7 @@ This repository is intentionally **de-identified**. It does not contain private 
 
 ## Quick Start
 
-Run the public push gate before pushing derivative content:
+Run the local public push gate before pushing derivative content:
 
 ```bash
 bash tools/prepush.sh
@@ -44,6 +44,24 @@ The sample uses the checked-in public output file. To inspect the machine-readab
 
 ```bash
 cat examples/api-router-call-check.json
+```
+
+## Remote Gate
+
+This repository runs a GitHub Actions gate on `push` to `main` and on `pull_request`:
+
+```text
+.github/workflows/public-safety.yml
+```
+
+The gate re-runs:
+- `python3 tools/validate_examples.py`
+- `python3 tools/check_public_safety.py`
+
+Optional remote verification after pushing:
+
+```bash
+python3 tools/verify_public_repo.py
 ```
 
 ## Repository Positioning

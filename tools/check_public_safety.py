@@ -29,6 +29,16 @@ LEAK_PATTERNS: list[tuple[str, re.Pattern[str]]] = [
 
 SKIP_DIRS = {".git", "node_modules", "__pycache__", "dist", "build"}
 SELF_SCAN_RELPATH = "tools/check_public_safety.py"
+SELF_VERIFY_RELPATH = "tools/verify_public_repo.py"
+
+
+def should_skip(path: Path) -> bool:
+    if path.name in SKIP_DIRS:
+        return True
+    rel = path.relative_to(ROOT).as_posix()
+    if rel in {SELF_SCAN_RELPATH, SELF_VERIFY_RELPATH, "tools/prepush.sh"}:
+        return True
+    return False
 
 
 def scan(path: Path) -> list[tuple[str, str, str]]:
@@ -36,15 +46,15 @@ def scan(path: Path) -> list[tuple[str, str, str]]:
     findings: list[tuple[str, str, str]] = []
     if path.is_dir():
         for child in path.iterdir():
-            if child.name in SKIP_DIRS:
+            if should_skip(child):
                 continue
             findings.extend(scan(child))
         return findings
-    if path.suffix not in {".md", ".json", ".yaml", ".yml", ".txt", ".ts", ".js", ".py"}:
+    if should_skip(path):
+        return findings
+    if path.suffix not in {".md", ".json", ".yaml", ".yml", ".txt", ".ts", ".js", ".py", ".sh"}:
         return findings
     rel = path.relative_to(ROOT).as_posix()
-    if rel == SELF_SCAN_RELPATH:
-        return findings
     try:
         text = path.read_text(encoding="utf-8")
     except UnicodeDecodeError:

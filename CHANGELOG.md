@@ -1,5 +1,11 @@
 # Changelog
 
+## 1.2.0 - 2026-10-21
+
+- Added GitHub Actions `public-safety` workflow.
+- Added remote verification tool `tools/verify_public_repo.py`.
+- Updated local pre-push gate docs to include local + remote stages.
+
 ## 1.1.0 - 2026-10-21
 
 - Added public push mechanism docs.
