@@ -28,6 +28,14 @@ This repository is intentionally **de-identified**. It does not contain private 
 
 ## Quick Start
 
+Run the public push gate before pushing derivative content:
+
+```bash
+bash tools/prepush.sh
+```
+
+Reproduce the sanitized call-check sample:
+
 ```bash
 python3 examples/reproduce_call_check.py
 ```
